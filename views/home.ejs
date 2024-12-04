@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="/public/css/style.css" rel="stylesheet" type="text/css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foods</title>
+</head>
+
+<body>
+    <div class="title">Food Stock</div>
+    <table class="table">
+        <tr class="header-row">
+            <td class="header-column" id="name-header">Name</td>
+            <td class="header-column" id="price-header">Price</td>
+            <td class="header-column">Quantity</td>
+        </tr>
+
+        <% for(let i=0; i < data.length; i++) { %>
+            <tr class="data-row">
+                <td class="data-column" id="name-data">
+                    <%= data[i].name %>
+                </td>
+                <td class="data-column" id="price-data">$<%= Number(data[i].price).toFixed(2) %>
+                </td>
+                <td class="data-column">
+                    <%= data[i].quantity %>
+                </td>
+            </tr>
+            <% } %>
+    </table>
+</body>
+
+</html>

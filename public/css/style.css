@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    background: linear-gradient(0deg, rgba(255, 220, 235, 1) 0%, rgba(191, 221, 255, 1) 100%);
+    display: table;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: table-cell;
+    margin: auto;
+    padding: 50px;
+}
+
+.title {
+    color: #fff;
+    font-weight: bolder;
+    padding-bottom: 20px;
+    font-size: 30px;
+}
+
+.table {
+    border: solid 1px rgb(55, 152, 255);
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+td {
+    padding: 5px;
+}
+
+#name-header, #name-data {
+    padding-right: 100px;
+}
+
+#price-header, #price-data {
+    padding-right: 50px;
+}
+
+.header-row {
+    background-color: rgb(55, 152, 255);
+    color: #fff;
+    font-weight: bold;
+}
+
+.data-row, .data-column {
+    border: solid 1px #d6d6d6;
+}
