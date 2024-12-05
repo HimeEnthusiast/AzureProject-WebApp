@@ -1,1 +1,46 @@
+name: Build
+on: push
 
+jobs:
+    build_dockerfile:
+        name: Build Dockerfile to Setup Database
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Load Repository
+          uses: actions/checkout@v4
+
+        - name: Create local.env
+          run: |
+            echo ROOT_SQL_SERVER_USERNAME=${{ secrets.ROOT_SQL_SERVER_USERNAME }} > local.env
+            echo ROOT_SQL_SERVER_PASSWORD=${{ secrets.ROOT_SQL_SERVER_PASSWORD }} >> local.env
+            echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> local.env
+            echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> local.env
+            echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> local.env
+            echo ACCEPT_EULA=${{ secrets.ACCEPT_EULA }} >> local.env
+            echo LIQUIBASE_ADMIN_USERNAME=${{ secrets.LIQUIBASE_ADMIN_USERNAME }} >> local.env
+            echo LIQUIBASE_ADMIN_PASSWORD=${{ secrets.LIQUIBASE_ADMIN_PASSWORD }} >> local.env
+            echo LIQUIBASE_DEFAULT_SCHEMA=${{ secrets.LIQUIBASE_DEFAULT_SCHEMA }} >> local.env
+
+
+        - name: Build Dockerfile
+          run: |
+            cd services/containers
+            docker build --tag 'db_setup'
+            docker run --detach 'db_setup'
+    
+    # run_webapp:
+    #     name: Setup Web App in Azure
+    #     runs-on: windows-latest
+
+    #     steps:
+    #     - name: Load Repository
+    #       uses: actions/checkout@v4
+
+    #     - name: Login to Azure
+    #       uses: azure/login@v2
+    #       with:
+    #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    #     - name: Run Azure Webapp Deploy Action
+    #       run: 
