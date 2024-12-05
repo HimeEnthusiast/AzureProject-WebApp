@@ -19,7 +19,7 @@ jobs:
             echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> local.env
             echo ACCEPT_EULA=${{ secrets.ACCEPT_EULA }} >> local.env
             echo LIQUIBASE_ADMIN_USERNAME=${{ secrets.LIQUIBASE_ADMIN_USERNAME }} >> local.env
-            echo LIQUIBASE_ADMIN_PASSWORD=${{ secrets.LIQUIBASE_ADMIN_PASSWORD }} >> local.env
+            echo LIQUIBASE_ADMIN_PASSWORD=password >> local.env
             echo LIQUIBASE_DEFAULT_SCHEMA=${{ secrets.LIQUIBASE_DEFAULT_SCHEMA }} >> local.env
 
 
