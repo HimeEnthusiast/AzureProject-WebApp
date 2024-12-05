@@ -26,7 +26,7 @@ jobs:
         - name: Build Dockerfile
           run: |
             cd services/containers
-            docker build --tag 'db_setup'
+            docker build --tag 'db_setup' .
             docker run --detach 'db_setup'
     
     # run_webapp:
