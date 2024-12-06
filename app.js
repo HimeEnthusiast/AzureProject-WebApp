@@ -1,4 +1,4 @@
-const mssqlConnector = require('../NodeBackend/src/database/mssql_connector.js')
+const mssqlConnector = require('../NodeBackend/src/database/mssql_connector')
 const express = require('express')
 
 const app = express()
