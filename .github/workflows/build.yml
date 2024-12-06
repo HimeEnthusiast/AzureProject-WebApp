@@ -3,7 +3,7 @@ on: push
 
 jobs:
     build_app:
-        name: Deploy Application to Azure
+        name: Set up App Environment
         runs-on: ubuntu-latest
 
         steps:
@@ -68,3 +68,4 @@ jobs:
           with:
             app-name: wapp-azuredemowebapplication
             publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
+            package: .
