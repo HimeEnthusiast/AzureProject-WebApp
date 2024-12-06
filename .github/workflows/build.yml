@@ -44,7 +44,7 @@ jobs:
         - name: npm install and run
           run: |
             npm install
-            node app.js
+            # node app.js
 
         - name: Deploy to Azure Web App
           uses: azure/webapps-deploy@v3
