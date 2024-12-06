@@ -1,4 +1,4 @@
-const mssqlConnector = require('../NodeBackend/src/database/mssql_connector')
+const mssqlConnector = require('../NodeBackend/src/database/mssql_connector.js')
 const express = require('express')
 
 const app = express()
@@ -14,5 +14,4 @@ app.get('/', async (req, res) => {
     let data = await mssqlConnector.selectAll()
     console.log(data)
     res.render('home', { data : data.recordset })
-    // res.json(data.recordset)
 })
