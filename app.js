@@ -12,6 +12,10 @@ app.use('/public', express.static('public'))
 //Endpoints
 app.get('/', async (req, res) => {
     let data = await mssqlConnector.selectAll()
-    console.log(data)
-    res.render('home', { data : data.recordset })
+    
+    if(data == null) {
+        res.render('home', { data : [] })
+    } else {
+        res.render('home', { data : data.recordset })
+    }
 })
