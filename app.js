@@ -1,10 +1,12 @@
 const mssqlConnector = require('../NodeBackend/src/database/mssql_connector')
 const express = require('express')
 
+const PORT = process.env.PORT || 8080
+
 const app = express()
 
-app.listen(80, () => {
-    console.log("Server running on port 3000")
+app.listen(PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`)
 })
 app.set('view engine', 'ejs')
 app.use('/public', express.static('public'))
