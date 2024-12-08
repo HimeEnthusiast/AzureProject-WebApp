@@ -1,4 +1,4 @@
-const mssqlConnector = require('../NodeBackend/src/database/mssql_connector')
+const mssqlConnector = require('./src/database/mssql_connector')
 const express = require('express')
 
 const PORT = process.env.PORT || 8080
