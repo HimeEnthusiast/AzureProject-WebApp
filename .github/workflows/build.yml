@@ -52,7 +52,7 @@ jobs:
 
         - name: Release Via Liquibase
           run: |
-            docker compose up -f ./deployment/database/docker-compose.yml --build
+            docker compose -f ./deployment/database/docker-compose.yml up --build
 
         - name: Delete firewall rule and update server to disable network access
           run: |
