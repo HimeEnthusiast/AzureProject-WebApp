@@ -1,0 +1,15 @@
+services:
+
+  liquidbase_update:
+    container_name: liquidbase_update
+    image: liquibase/liquibase:4.29
+    command: update
+    environment:
+      LIQUIBASE_COMMAND_DEFAULT_SCHEMA_NAME: ${LIQUIBASE_DEFAULT_SCHEMA}
+      LIQUIBASE_COMMAND_CHANGELOG_FILE: changelog/changelog.sql
+      LIQUIBASE_COMMAND_URL: jdbc:sqlserver://$DATABASE_HOST:$DATABASE_PORT;databaseName=$DATABASE_NAME;encrypt=true;trustServerCertificate=true
+      LIQUIBASE_COMMAND_USERNAME: ${LIQUIBASE_ADMIN_USERNAME}
+      LIQUIBASE_COMMAND_PASSWORD: ${LIQUIBASE_ADMIN_PASSWORD}
+      LIQUIBASE_COMMAND_DRIVER: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    volumes:
+      - ../../services/database/liquibase/changelog.sql:/liquibase/changelog/changelog.sql

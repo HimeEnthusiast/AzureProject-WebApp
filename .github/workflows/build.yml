@@ -16,41 +16,47 @@ jobs:
             node-version: 20.x
             cache: 'npm'
 
-        - name: Create local.env for Dockerfile
-          run: |
-            echo ROOT_SQL_SERVER_USERNAME=${{ secrets.ROOT_SQL_SERVER_USERNAME }} > local.env
-            echo ROOT_SQL_SERVER_PASSWORD=${{ secrets.ROOT_SQL_SERVER_PASSWORD }} >> local.env
-            echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> local.env
-            echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> local.env
-            echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> local.env
-            echo ACCEPT_EULA=${{ secrets.ACCEPT_EULA }} >> local.env
-            echo LIQUIBASE_ADMIN_USERNAME=${{ secrets.LIQUIBASE_ADMIN_USERNAME }} >> local.env
-            echo LIQUIBASE_ADMIN_PASSWORD=${{ secrets.LIQUIBASE_ADMIN_PASSWORD }} >> local.env
-            echo LIQUIBASE_DEFAULT_SCHEMA=${{ secrets.LIQUIBASE_DEFAULT_SCHEMA }} >> local.env
-
-        - name: Create .env for Web App
-          run: |
-            echo DB_USER=${{ secrets.DB_USER }} > .env
-            echo DB_PASS=${{ secrets.DB_PASS }} >> .env
-            echo DB_SERVER=${{ secrets.DB_SERVER }} >> .env
-            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-
         - name: Build Dockerfile
           run: |
             cd services/containers/database
             docker build --tag 'db_setup' .
             docker run --detach 'db_setup'
 
-        - name: npm install and run
+        - name: npm install
           run: |
             npm install
-            ###
 
         - name: Upload artifact for deployment job
           uses: actions/upload-artifact@v4
           with:
             name: azuredemoapp
             path: .
+    
+    release_database_changes:
+        name: Release Database Changes
+        runs-on: ubuntu-latest
+        needs: build_app
+        
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Login to Azure
+          uses: azure/login@v2
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        - name: Create firewall rule for SQL Server
+          run: |
+            ./deployment/database/firewallAllowAll.ps1
+
+        - name: Release Via Liquibase
+          run: |
+            docker compose up -f ./deployment/database/docker-compose.yml --build
+
+        - name: Delete firewall rule and update server to disable network access
+          run: |
+            ./deployment/database/firewallDeleteRule.ps1
 
     deploy:
         name: Deploy App to Azure App Service
@@ -62,6 +68,11 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: azuredemoapp
+
+        - name: Login to Azure
+          uses: azure/login@v2
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
 
         - name: Deploy to Azure Web App
           uses: azure/webapps-deploy@v3
