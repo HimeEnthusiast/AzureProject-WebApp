@@ -36,10 +36,10 @@ jobs:
         name: Release Database Changes
         runs-on: self-hosted
         env: 
-          LIQUIBASE_DEFAULT_SCHEMA: ${{ secrets.LIQUIBASE_DEFAULT_SCHEMA }}
-          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          LIQUIBASE_DEFAULT_SCHEMA: ${{ vars.LIQUIBASE_DEFAULT_SCHEMA }}
+          DATABASE_HOST: ${{ vars.DATABASE_HOST }}
+          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+          DATABASE_NAME: ${{ vars.DATABASE_NAME }}
           LIQUIBASE_ADMIN_USERNAME: ${{ secrets.LIQUIBASE_ADMIN_USERNAME }}
           LIQUIBASE_ADMIN_PASSWORD: ${{ secrets.LIQUIBASE_ADMIN_PASSWORD }}
         needs: build_app
