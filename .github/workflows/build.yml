@@ -79,3 +79,5 @@ jobs:
             app-name: wapp-azuredemowebapplication
             publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
             package: .
+
+##
