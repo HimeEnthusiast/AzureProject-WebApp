@@ -34,7 +34,7 @@ jobs:
     
     release_database_changes:
         name: Release Database Changes
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         needs: build_app
         
         steps:
@@ -46,17 +46,9 @@ jobs:
           with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-        # - name: Create firewall rule for SQL Server
-        #   run: |
-        #     ./deployment/database/firewallAllowAll.ps1
-
         - name: Release Via Liquibase
           run: |
             docker compose -f ./deployment/database/docker-compose.yml up --build
-
-        - name: Delete firewall rule and update server to disable network access
-          run: |
-            ./deployment/database/firewallDeleteRule.ps1
 
     deploy:
         name: Deploy App to Azure App Service
