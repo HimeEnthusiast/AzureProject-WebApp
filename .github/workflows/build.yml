@@ -50,6 +50,8 @@ jobs:
           run: |
             docker compose -f ./deployment/database/docker-compose.yml up --build
 
+        ##
+
     deploy:
         name: Deploy App to Azure App Service
         runs-on: ubuntu-latest
