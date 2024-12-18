@@ -1,5 +1,7 @@
 name: Build
-on: push
+on: 
+    push:
+    workflow_dispatch:
 
 jobs:
     build_app:
@@ -80,4 +82,4 @@ jobs:
             publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
             package: .
 
-##
+#
