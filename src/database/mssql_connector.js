@@ -1,3 +1,5 @@
+const logger = require('../logger/logger')
+
 const sql = require('mssql')
 require('dotenv').config()
 
@@ -15,7 +17,7 @@ async function selectAll() {
         await sql.connect(config)
         return await sql.query('SELECT * FROM [shop].[food];')
     } catch(err) {
-        console.log(err)
+        logger.error(`failed to query database; ${err}`)
     }
 }
 

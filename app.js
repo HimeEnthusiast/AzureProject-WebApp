@@ -1,3 +1,5 @@
+const logger = require('./src/logger/logger')
+
 const mssqlConnector = require('./src/database/mssql_connector')
 const express = require('express')
 
@@ -13,6 +15,8 @@ app.use('/public', express.static('public'))
 
 //Endpoints
 app.get('/', async (req, res) => {
+    logger.info('loading page "/" server side')
+    logger.info('attempting to query database')
     let data = await mssqlConnector.selectAll()
     
     if(data == null) {
