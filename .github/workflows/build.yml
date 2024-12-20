@@ -67,7 +67,7 @@ jobs:
 
         - name: Delete firewall rule and private DB server
           run: |
-            ./deployment/database/firewallDeleteRule.ps1
+            az sql server update --enable-public-network false
 
     deploy:
         name: Deploy App to Azure App Service
