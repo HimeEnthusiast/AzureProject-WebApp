@@ -57,9 +57,9 @@ jobs:
           with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-        - name: Allow home IP
-          run: |
-            ./deployment/database/firewallAllowHome.ps1
+        # - name: Allow home IP
+        #   run: |
+        #     ./deployment/database/firewallAllowHome.ps1
 
         - name: Release Via Liquibase
           run: |
