@@ -92,3 +92,4 @@ jobs:
             publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
             package: .
 
+#
