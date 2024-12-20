@@ -67,7 +67,7 @@ jobs:
 
         - name: Delete firewall rule and private DB server
           run: |
-            az sql server update --resource-group RG_AzureBicepApplicationDeployment --name sql1357924680.database.windows.net --enable-public-network false
+            az sql server update --resource-group RG_AzureBicepApplicationDeployment --name sql1357924680 --enable-public-network false
 
     deploy:
         name: Deploy App to Azure App Service
