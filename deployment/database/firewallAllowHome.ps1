@@ -8,5 +8,5 @@ az sql server firewall-rule create `
 --name AllowAll `
 --resource-group $groupName `
 --server $serverName `
---start-ip-address 0.0.0.0 `
---end-ip-address 255.255.255.255
+--start-ip-address 99.253.102.25 `
+--end-ip-address 99.253.102.25
