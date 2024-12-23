@@ -5,7 +5,7 @@ Write-Output Set account to BellaFirstSubscription
 az account set --subscription "BellaFirstSubscription"
 
 az sql server firewall-rule create `
---name AllowAll `
+--name AllowHome `
 --resource-group $groupName `
 --server $serverName `
 --start-ip-address 99.253.102.25 `

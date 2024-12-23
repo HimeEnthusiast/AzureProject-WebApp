@@ -57,10 +57,6 @@ jobs:
           with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-        # - name: Allow home IP
-        #   run: |
-        #     ./deployment/database/firewallAllowHome.ps1
-
         - name: Release Via Liquibase
           run: |
             docker compose -f ./deployment/database/docker-compose.yml up --build
@@ -89,7 +85,6 @@ jobs:
           uses: azure/webapps-deploy@v2
           with:
             app-name: wapp-azuredemowebapplication
-            publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
             package: .
 
 #
