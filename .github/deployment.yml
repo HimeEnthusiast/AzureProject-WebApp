@@ -1,0 +1,21 @@
+name: Deploy Project To Azure
+
+on: 
+  push:
+    branches:
+      - master
+    paths:
+    - 'src/**'
+    - 'views/**'
+
+  workflow_dispatch:
+
+jobs:
+
+  deploy-project:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Load Repository
+        uses: actions/checkout@v4
