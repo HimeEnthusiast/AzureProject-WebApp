@@ -14,8 +14,43 @@ jobs:
 
   deploy-project:
     runs-on: ubuntu-latest
+    environment: Development-Environment
 
     steps:
 
-      - name: Load Repository
-        uses: actions/checkout@v4
+        - name: Load Repository
+          uses: actions/checkout@v4
+
+        - name: Login to Azure
+          uses: azure/login@v2
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+        - name: Set Target Azure Subscription
+          run: az account set --subscription $AZURE_SUBSCRIPTION
+
+        - name: Create Environment Resource Group
+          env:
+            RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP_NAME }}
+            DEPLOYMENT_LOCATION: ${{ vars.DEPLOYMENT_LOCATION }}
+          run: |
+            az group create \
+                --name $RESOURCE_GROUP_NAME \
+                --location $DEPLOYMENT_LOCATION
+    
+        - name: Create Bicep IaC Deployment
+          env: 
+            DATABASE_SERVER_ADMIN_USERNAME: ${{ secrets.DATABASE_SERVER_ADMIN_USERNAME }}
+            DATABASE_SERVER_ADMIN_PASSWORD: ${{ secrets.DATABASE_SERVER_ADMIN_PASSWORD }}
+            DATABASE_SERVER_HOST_NAME: ${{ vars.DATABASE_SERVER_HOST_NAM }}
+            DATABASE_NAME: ${{ vars.DATABASE_NAME }}
+          run: |
+            az deployment group create \
+                --name GithubActionsDeployment \
+                --resource-group $RESOURCE_GROUP_NAME \
+                --template-file ./deployment/iac/bicep/entrypoint.bicep \
+                    --parameters deploymentLocation=$DEPLOYMENT_LOCATION \
+                    --parameters databaseServerHostName=$DATABASE_SERVER_HOST_NAME \
+                    --parameters databaseName=$DATABASE_NAME \
+                    --parameters databaseServerAdminUsername=$DATABASE_SERVER_ADMIN_USERNAME \
+                    --parameters databaseServerAdminPassword=$DATABASE_SERVER_ADMIN_PASSWORD

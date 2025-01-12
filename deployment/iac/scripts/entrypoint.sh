@@ -5,8 +5,6 @@ AZURE_SUBSCRIPTION="634787db-0332-4328-aa6d-ec43aed7e3c1"
 RESOURCE_GROUP_NAME="RG_AzureBicepApplicationDeployment"
 DEPLOYMENT_LOCATION="canadacentral"
 
-DATABASE_SERVER_ADMIN_PASSWORD="MeowMeowMeow123!!"
-
 az account set --subscription $AZURE_SUBSCRIPTION
 
 az group create --name $RESOURCE_GROUP_NAME --location $DEPLOYMENT_LOCATION
