@@ -15,6 +15,10 @@ jobs:
   deploy-project:
     runs-on: ubuntu-latest
     environment: Development-Environment
+    env:
+      AZURE_SUBSCRIPTION: ${{ vars.AZURE_SUBSCRIPTION }}
+      RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP_NAME }}
+      DEPLOYMENT_LOCATION: ${{ vars.DEPLOYMENT_LOCATION }}
 
     steps:
 
@@ -27,14 +31,9 @@ jobs:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
         
         - name: Set Target Azure Subscription
-          env:
-            AZURE_SUBSCRIPTION: ${{ vars.AZURE_SUBSCRIPTION }}
           run: az account set --subscription $AZURE_SUBSCRIPTION
 
         - name: Create Environment Resource Group
-          env:
-            RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP_NAME }}
-            DEPLOYMENT_LOCATION: ${{ vars.DEPLOYMENT_LOCATION }}
           run: |
             az group create \
                 --name $RESOURCE_GROUP_NAME \
