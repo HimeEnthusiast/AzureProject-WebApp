@@ -27,6 +27,8 @@ jobs:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
         
         - name: Set Target Azure Subscription
+          env:
+            AZURE_SUBSCRIPTION: ${{ vars.AZURE_SUBSCRIPTION }}
           run: az account set --subscription $AZURE_SUBSCRIPTION
 
         - name: Create Environment Resource Group
