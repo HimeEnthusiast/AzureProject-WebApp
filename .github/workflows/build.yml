@@ -1,8 +1,13 @@
 name: Build
+
 on: 
     push:
-        branches:
-            - master
+      branches:
+        - master
+      paths:
+      - 'src/**'
+      - 'views/**'
+  
     workflow_dispatch:
 
 jobs:
