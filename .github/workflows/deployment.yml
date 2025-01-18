@@ -43,7 +43,7 @@ jobs:
           env: 
             DATABASE_SERVER_ADMIN_USERNAME: ${{ secrets.DATABASE_SERVER_ADMIN_USERNAME }}
             DATABASE_SERVER_ADMIN_PASSWORD: ${{ secrets.DATABASE_SERVER_ADMIN_PASSWORD }}
-            DATABASE_SERVER_HOST_NAME: ${{ vars.DATABASE_SERVER_HOST_NAM }}
+            DATABASE_SERVER_HOST_NAME: ${{ vars.DATABASE_SERVER_HOST_NAME }}
             DATABASE_NAME: ${{ vars.DATABASE_NAME }}
           run: |
             az deployment group create \
