@@ -1,9 +1,6 @@
 @description('Virtual Network Name')
 param virtualNetworkName string
 
-@description('Deployment Location')
-param deploymentLocation string
-
 @description('Database DNS Record')
 param databaseServerHostName string
 
@@ -36,5 +33,4 @@ resource dnsZoneToVnet 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@20
     registrationEnabled: false
     virtualNetwork: { id: deploymentVirtualNetwork.id }
   }
-  dependsOn: [ databasePrivateDnsZone ]
 }
