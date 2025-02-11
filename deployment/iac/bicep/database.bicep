@@ -4,9 +4,6 @@ param serverHostName string
 @description('Database Name')
 param databaseName string
 
-@description('Deployment Location')
-param deploymentLocation string = resourceGroup().location
-
 @description('Database Server Admin Username')
 param databaseServerAdminUsername string
 
@@ -25,29 +22,32 @@ var networkInterfaceCardName = 'nic-${serverHostName}'
 
 resource azureSqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   name: serverHostName
-  location: deploymentLocation
+  location: resourceGroup().location
   properties: {
     administratorLogin: databaseServerAdminUsername
     administratorLoginPassword: databaseServerAdminPassword
     publicNetworkAccess: 'Disabled'
-    minimalTlsVersion: '1.3'
+    minimalTlsVersion: '1.2'
   }
 }
 
 resource azureSqlDatabase 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
   parent: azureSqlServer
   name: databaseName
-  location: deploymentLocation
+  location: resourceGroup().location
+  properties: {
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+  }
   sku: {
     name: 'Basic'
     tier: 'Basic'
-    size: '2GB'
+    capacity: 5
   }
 }
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
   name: privateEndpointName
-  location: deploymentLocation
+  location: resourceGroup().location
   properties: {
     customNetworkInterfaceName: networkInterfaceCardName 
     ipConfigurations: [

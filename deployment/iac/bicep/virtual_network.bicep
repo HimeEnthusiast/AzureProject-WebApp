@@ -38,6 +38,7 @@ resource databaseSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  
     addressPrefix: '10.0.2.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
   }
+  dependsOn: [webAppsSubnet]
 }
 
 output virtualNetworkName string = deploymentVirtualNetwork.name

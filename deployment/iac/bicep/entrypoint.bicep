@@ -31,12 +31,12 @@ module azureSql './database.bicep' = {
   params: {
     serverHostName: databaseServerHostName
     databaseName: databaseName
-    deploymentLocation: deploymentLocation
     databaseServerAdminUsername: databaseServerAdminUsername
     databaseServerAdminPassword: databaseServerAdminPassword
     databaseSubnetId: virutalNetwork.outputs.databaseSubnetId
     privateIpAddress: databaseServerPrivateIpAddress
   }
+  dependsOn: [virutalNetwork]
 }
 
 module webApp './web_app.bicep' = {
@@ -50,14 +50,15 @@ module webApp './web_app.bicep' = {
     databaseServerPassword: databaseServerAdminPassword
     webAppSubnetId: virutalNetwork.outputs.webAppSubnetId
   }
+  dependsOn: [virutalNetwork, azureSql]
 }
 
 module privateDnsZones './private_dns.bicep' = {
   name: 'privateDnsZoneDeploy'
   params: {
     virtualNetworkName: virutalNetwork.outputs.virtualNetworkName
-    deploymentLocation: deploymentLocation
     databaseServerHostName: databaseServerHostName
     databaseStaticIpAddress: databaseServerPrivateIpAddress
   }
+  dependsOn: [azureSql, webApp]
 }

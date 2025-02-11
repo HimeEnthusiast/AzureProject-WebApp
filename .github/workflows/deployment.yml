@@ -13,6 +13,7 @@ on:
 jobs:
 
   deploy-project:
+    name: Azure Resource Deployment With Bicep
     runs-on: ubuntu-latest
     environment: Development-Environment
     env:
@@ -39,7 +40,7 @@ jobs:
                 --name $RESOURCE_GROUP_NAME \
                 --location $DEPLOYMENT_LOCATION
     
-        - name: Create Bicep IaC Deployment
+        - name: Execute Azure Bicep Resource Deployment
           env: 
             DATABASE_SERVER_ADMIN_USERNAME: ${{ secrets.DATABASE_SERVER_ADMIN_USERNAME }}
             DATABASE_SERVER_ADMIN_PASSWORD: ${{ secrets.DATABASE_SERVER_ADMIN_PASSWORD }}
@@ -48,7 +49,7 @@ jobs:
           timeout-minutes: 10
           run: |
             az deployment group create \
-                --name GithubActionsDeployment \
+                --name github-actions-deployment \
                 --resource-group $RESOURCE_GROUP_NAME \
                 --template-file ./deployment/iac/bicep/entrypoint.bicep \
                     --parameters deploymentLocation=$DEPLOYMENT_LOCATION \
@@ -56,3 +57,5 @@ jobs:
                     --parameters databaseName=$DATABASE_NAME \
                     --parameters databaseServerAdminUsername=$DATABASE_SERVER_ADMIN_USERNAME \
                     --parameters databaseServerAdminPassword=$DATABASE_SERVER_ADMIN_PASSWORD
+    
+  
